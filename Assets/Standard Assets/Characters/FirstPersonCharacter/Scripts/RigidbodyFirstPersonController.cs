@@ -3,11 +3,15 @@ using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
 namespace UnityStandardAssets.Characters.FirstPerson
-{
+{	
     [RequireComponent(typeof (Rigidbody))]
     [RequireComponent(typeof (CapsuleCollider))]
+
     public class RigidbodyFirstPersonController : MonoBehaviour
-    {
+    {	
+
+		public GameObject ammo;
+
         [Serializable]
         public class MovementSettings
         {
@@ -134,9 +138,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_Jump = true;
             }
+
+			if (Input.GetKey (KeyCode.Space)) {
+				createAmmo ();
+			}
         }
-
-
+			
         private void FixedUpdate()
         {
             GroundCheck();
@@ -186,6 +193,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jump = false;
         }
 
+		private void createAmmo(){
+			Vector3 position = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 10);
+			position = Camera.main.ScreenToWorldPoint (position);
+			Instantiate (ammo, position, Quaternion.identity);
+			//ammo.GetComponent<Rigidbody> ().AddForce(ammo.transform.forward);
+			//ammo.transform.LookAt (position);
+		}
 
         private float SlopeMultiplier()
         {
