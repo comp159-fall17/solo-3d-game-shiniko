@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyManager : MonoBehaviour {
 	public Transform player;
@@ -8,26 +9,41 @@ public class EnemyManager : MonoBehaviour {
 	public float speed;
 	public int totalEnemies;
 	public int enemyRange;
+	public Text waveText;
+	public Text enemyCountText;
 
 	private List<GameObject> listOfEnemies;
 	private int tempTotalEnemies;
+	private int waveCounter;
 
 	// Use this for initialization
 	void Start () {
 		listOfEnemies = new List<GameObject> ();
-		totalEnemies = tempTotalEnemies;
+		tempTotalEnemies = totalEnemies;
+		waveCounter = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (listOfEnemies.Count == 0) {
 			startWave ();
+			waveCounter += 1;
 		}
 		Debug.Log (listOfEnemies.Count);
+		updateEnemyText ();
+	}
+
+	void updateWaveText(){
+		waveText.text = "Current Wave: " + waveCounter;
+	}
+
+	void updateEnemyText(){
+		enemyCountText.text = "Enemies Remaining: " + tempTotalEnemies;
 	}
 
 	void startWave(){
 		tempTotalEnemies = totalEnemies;
+		updateWaveText ();
 		for (int i = 0; i < totalEnemies; i++) {
 			createEnemy ();
 		}
