@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.UI;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {	
@@ -206,10 +207,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			//Rigidbody tempAmmo = ammo.GetComponent<Rigidbody> ();
 			//tempAmmo.AddForce (tempAmmo.transform.forward * ammo_forward_force);
 			//ammo.transform.LookAt (position);
-		}
-
-		public void gameOver(){
-			Debug.Log ("donzos");
 		}
 
         private float SlopeMultiplier()

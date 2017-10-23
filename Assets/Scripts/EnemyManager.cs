@@ -11,6 +11,7 @@ public class EnemyManager : MonoBehaviour {
 	public int enemyRange;
 	public Text waveText;
 	public Text enemyCountText;
+	public Text gameOverText;
 
 	private List<GameObject> listOfEnemies;
 	private int tempTotalEnemies;
@@ -21,6 +22,7 @@ public class EnemyManager : MonoBehaviour {
 		listOfEnemies = new List<GameObject> ();
 		tempTotalEnemies = totalEnemies;
 		waveCounter = 0;
+		gameOverText.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -85,4 +87,17 @@ public class EnemyManager : MonoBehaviour {
 		tempTotalEnemies -= 1;
 	}
 
+	public void removeAllEnemies(){
+		for (int i = 0; i < tempTotalEnemies; i++) {
+			GameObject deadEnemy = listOfEnemies [i];
+			//listOfEnemies.RemoveAt (tempTotalEnemies-1);
+			//totalEnemies -= 1;
+			Destroy (deadEnemy);
+		}
+	}
+
+	public void gameOver(){
+		gameOverText.enabled = true;
+		removeAllEnemies ();
+	}
 }

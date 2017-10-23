@@ -29,7 +29,7 @@ public class EnemyController : MonoBehaviour {
 		}
 
 		if (other.gameObject.tag == "Player") {
-			other.GetComponent<RigidbodyFirstPersonController> ().gameOver ();
+			thisGameObj.gameOver ();
 		}	
 	}
 
@@ -39,5 +39,9 @@ public class EnemyController : MonoBehaviour {
 
 	public void setPlayer(Transform p){
 		player = p;
+	}
+
+	public void destroyEnemy(){
+		Destroy (this.gameObject);
 	}
 }
