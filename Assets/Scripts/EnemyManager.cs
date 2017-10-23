@@ -6,16 +6,19 @@ using UnityEngine.UI;
 public class EnemyManager : MonoBehaviour {
 	public Transform player;
 	public GameObject enemyPrefab;
+	public GameObject resetBox;
 	public float speed;
 	public int totalEnemies;
 	public int enemyRange;
 	public Text waveText;
 	public Text enemyCountText;
 	public Text gameOverText;
+	public Text resetText;
 
 	private List<GameObject> listOfEnemies;
 	private int tempTotalEnemies;
 	private int waveCounter;
+	private bool isGameOver;
 
 	// Use this for initialization
 	void Start () {
@@ -23,15 +26,17 @@ public class EnemyManager : MonoBehaviour {
 		tempTotalEnemies = totalEnemies;
 		waveCounter = 0;
 		gameOverText.enabled = false;
+		resetText.enabled = false;
+		isGameOver = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (listOfEnemies.Count == 0) {
+		if (listOfEnemies.Count == 0 && !isGameOver) {
 			startWave ();
 			waveCounter += 1;
 		}
-		Debug.Log (listOfEnemies.Count);
+		//Debug.Log (listOfEnemies.Count);
 		updateEnemyText ();
 	}
 
@@ -90,14 +95,19 @@ public class EnemyManager : MonoBehaviour {
 	public void removeAllEnemies(){
 		for (int i = 0; i < tempTotalEnemies; i++) {
 			GameObject deadEnemy = listOfEnemies [i];
-			//listOfEnemies.RemoveAt (tempTotalEnemies-1);
-			//totalEnemies -= 1;
 			Destroy (deadEnemy);
 		}
 	}
 
 	public void gameOver(){
 		gameOverText.enabled = true;
+		isGameOver = true;
 		removeAllEnemies ();
+		resetText.enabled = true;
+		showReset ();
+	}
+
+	public void showReset(){
+		Instantiate (resetBox, resetText.transform.position - new Vector3(0,1,0), Quaternion.identity);
 	}
 }
