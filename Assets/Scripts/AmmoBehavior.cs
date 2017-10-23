@@ -10,9 +10,9 @@ public class AmmoBehavior : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Destroy (this, lifetime);
+		Destroy (this.gameObject, lifetime);
 		rb = GetComponent<Rigidbody> ();
-		rb.AddForce (rb.transform.forward);
+		rb.AddForce (rb.transform.forward * 800);
 	}
 	
 	// Update is called once per frame

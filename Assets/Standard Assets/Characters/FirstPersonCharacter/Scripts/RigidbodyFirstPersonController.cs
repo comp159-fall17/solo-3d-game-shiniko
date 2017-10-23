@@ -9,8 +9,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
     public class RigidbodyFirstPersonController : MonoBehaviour
     {	
-
+		public GameObject ammoEmmiter;
 		public GameObject ammo;
+		public float ammo_forward_force = 500f;
+		public float fireRate = 1f;
+		private float nextFire = 0f;
 
         [Serializable]
         public class MovementSettings
@@ -127,6 +130,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
             mouseLook.Init (transform, cam.transform);
+			nextFire = 0;
         }
 
 
@@ -139,7 +143,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_Jump = true;
             }
 
-			if (Input.GetKey (KeyCode.Space)) {
+			if (Input.GetKey (KeyCode.Space) && Time.time > nextFire) {
+				nextFire = Time.time + fireRate;
 				createAmmo ();
 			}
         }
@@ -196,9 +201,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
 		private void createAmmo(){
 			Vector3 position = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 10);
 			position = Camera.main.ScreenToWorldPoint (position);
-			Instantiate (ammo, position, Quaternion.identity);
-			//ammo.GetComponent<Rigidbody> ().AddForce(ammo.transform.forward);
+			Instantiate (ammo, ammoEmmiter.transform.position, ammoEmmiter.transform.rotation);
+			//ammo.GetComponent<Rigidbody>().AddForce (ammo.GetComponent<Rigidbody> ().transform.forward*500);
+			//Rigidbody tempAmmo = ammo.GetComponent<Rigidbody> ();
+			//tempAmmo.AddForce (tempAmmo.transform.forward * ammo_forward_force);
 			//ammo.transform.LookAt (position);
+		}
+
+		public void gameOver(){
+			Debug.Log ("donzos");
 		}
 
         private float SlopeMultiplier()
