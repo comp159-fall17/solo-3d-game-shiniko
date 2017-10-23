@@ -40,8 +40,4 @@ public class EnemyController : MonoBehaviour {
 	public void setPlayer(Transform p){
 		player = p;
 	}
-
-	public void destroyEnemy(){
-		Destroy (this.gameObject);
-	}
 }
