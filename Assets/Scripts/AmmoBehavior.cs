@@ -19,4 +19,10 @@ public class AmmoBehavior : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	void OnTriggerEnter(Collider other){
+		if (other.gameObject.tag == "Enemy") {
+			Destroy (this.gameObject);
+		}
+	}
 }

@@ -4,13 +4,17 @@ using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
 public class EnemyController : MonoBehaviour {
-	public Transform player;
-
+	private Transform player;
 	private float speed;
+
+	private GameObject gameObj;
+	private EnemyManager thisGameObj;
+
 	// Use this for initialization
 	void Start () {
-		player = GameObject.FindWithTag ("Player").transform;
-		speed = 1;
+		//speed = 1;
+		gameObj = GameObject.FindGameObjectWithTag ("EnemyManager");
+		thisGameObj = gameObj.GetComponent<EnemyManager> ();
 	}
 	
 	// Update is called once per frame
@@ -20,6 +24,7 @@ public class EnemyController : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
 		if (other.gameObject.tag == "Ammo") {
+			thisGameObj.removeEnemy ();
 			Destroy (this.gameObject);
 		}
 
@@ -30,5 +35,9 @@ public class EnemyController : MonoBehaviour {
 
 	public void setSpeed(float s){
 		speed = s;
+	}
+
+	public void setPlayer(Transform p){
+		player = p;
 	}
 }
